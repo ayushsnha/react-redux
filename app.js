@@ -4,15 +4,21 @@ const path = require('path');
 const PORT = process.env.PORT||5000;
 
 
-const dev = app.get('env')!=='production'
+//Static file declaration
+app.use(express.static(path.join(__dirname, 'client/build')));
 
-if(!dev){
-    app.disable('x-powered-by')
-    app.use(express.static(path.resolve(__dirname,'build')))
-    app.get('*',(req,res)=>{
-        res.sendFile(path.resolve(__dirname,'build','index.html'))
-    })
+//production mode
+if(process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, 'client/build')));
+  //
+  app.get('*', (req, res) => {
+    res.sendfile(path.join(__dirname = 'client/build/index.html'));
+  })
 }
+//build mode
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname+'/client/public/index.html'));
+})
 
 app.get("/",(req,res)=>{
     res.send('hello');
