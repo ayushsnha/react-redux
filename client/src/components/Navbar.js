@@ -4,7 +4,7 @@ class Navbar extends React.Component{
     render(){
         return(
             <div className="navbar navbar-dark bg-dark">
-                <span class="navbar-brand mb-0 h1">Navbar</span>
+                <span className="navbar-brand mb-0 h1">Navbar</span>
             </div>
             
         )

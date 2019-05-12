@@ -1,0 +1,26 @@
+{
+  "name": "react-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
+
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ayushsnha/React-test.git"
+  },
+  "author": "Ayush",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ayushsnha/React-test/issues"
+  },
+  "homepage": "https://github.com/ayushsnha/React-test#readme",
+  "dependencies": {
+    "concurrently": "^4.1.0",
+    "express": "^4.16.4",
+    "path": "^0.12.7"
+  }
+}
