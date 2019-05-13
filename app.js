@@ -4,25 +4,10 @@ const path = require('path');
 const PORT = process.env.PORT||5000;
 
 
-//Static file declaration
+// Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
 
-//production mode
-if(process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, 'client/build')));
-  //
-  app.get('*', (req, res) => {
-    res.sendfile(path.join(__dirname = 'client/build/index.html'));
-  })
-}
-//build mode
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname+'/client/public/index.html'));
-})
 
-app.get("/",(req,res)=>{
-    res.send('hello');
-})
 app.get("/api/customer",(req,res)=>{
     const customer=[
         {id:1,firstname:'guy1',lastname:'abc'},
@@ -31,6 +16,10 @@ app.get("/api/customer",(req,res)=>{
     ];
     res.json(customer)
 })
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname+'/client/build/index.html'));
+});
 
 app.listen(PORT,(err)=>{
     if(err)throw err
