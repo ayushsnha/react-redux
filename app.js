@@ -4,6 +4,12 @@ const path = require('path');
 const PORT = process.env.PORT||5000;
 
 
+const dev = app.get('env')!=='production'
+
+if(!dev){
+  app.disable('x-powered-by')
+}
+
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
 
