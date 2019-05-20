@@ -1,32 +1,30 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import {fetchPosts} from '../redux/actions/postActions'
+
+
 
 class Content extends React.Component{
-    constructor(){
-        super();
-        this.state={
-            customer:[]
+    componentWillMount(){
+        this.props.fetchPosts();
+    }
+
+    componentWillReceiveProps(nextProps){
+        if(nextProps.newPost){
+            this.props.posts.unshift(nextProps.newPost)
         }
     }
 
-    componentDidMount(){       
-            fetch("/api/customer")
-            .then(res =>{
-                if(res.ok){
-                    res.json()
-                    .then(customer => {
-                        this.setState({
-                            customer: customer
-                            })
-                        })
-                        } else {throw Error(`Request rejected with status ${res.status}`);}
-                } )                
-    }
 
     render(){
-                const customers=this.state.customer.map(customer=>{
+                const postItems=this.props.posts.map(post=>{
            
                     return(
-                    <li key={customer.id}>{customer.firstname} {customer.lastname}</li>
+                    <li key={post.id}>
+                    <strong>{post.title}</strong> 
+                    <span>{post.body}</span>
+                    </li>
                     )
                 })
             
@@ -37,9 +35,9 @@ class Content extends React.Component{
             <div className="container">
                 <div>
                     <h1>Hello, Welcome to the test React App</h1>
-                        {this.state.customer.length > 0 ? 
-                    <ul>{customers}</ul> :
-                    null}
+                        {this.props.posts.length > 0 ? 
+                    <ol>{postItems}</ol> :
+                    "Can't load.. :|"}
                     
                 </div>
             </div>
@@ -47,4 +45,14 @@ class Content extends React.Component{
     }
 }
 
-export default Content
+Content.propTypes={
+    fetchPosts:PropTypes.func.isRequired,
+    posts:PropTypes.array.isRequired,
+    newPost:PropTypes.object
+}
+
+const mapStateToProps= state=>({
+    posts: state.posts.items,
+    newPost:state.posts.item
+});
+export default  connect(mapStateToProps,{fetchPosts})(Content) 
